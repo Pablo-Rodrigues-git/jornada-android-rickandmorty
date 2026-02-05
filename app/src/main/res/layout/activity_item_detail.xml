@@ -28,6 +28,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -56,5 +57,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gênero: Feminino" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipOrigem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Origem: Terra" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Localização: Terra" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipEpisodios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Episódios: 51" />
     </com.google.android.material.chip.ChipGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
