@@ -1,54 +1,47 @@
 package com.oceanbrasil.oceanjornadaandroidmar2024.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oceanbrasil.oceanjornadaandroidmar2024.R
-import com.oceanbrasil.oceanjornadaandroidmar2024.model.domain.Personagem
+import com.oceanbrasil.oceanjornadaandroidmar2024.model.api.ApiRepository
+import com.oceanbrasil.oceanjornadaandroidmar2024.model.api.ApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Configuração da RecyclerView
         val rvItens = findViewById<RecyclerView>(R.id.rvItens)
         rvItens.layoutManager = LinearLayoutManager(this)
 
-        // 1. Criar a lista de dados locais
-        // Usando ícones padrão do Android para evitar a necessidade de imagens customizadas.
-        val personagens = listOf(
-            Personagem(
-                nome = "Rick Sanchez",
-                imagem = android.R.drawable.ic_dialog_info,
-                description = "Descrição do Rick Sanchez"
-            ),
-            Personagem(
-                nome = "Morty Smith",
-                imagem = android.R.drawable.ic_dialog_alert,
-                description = "Descrição do Morty Smith"
-            ),
-            Personagem(
-                nome = "Summer Smith",
-                imagem = android.R.drawable.ic_dialog_dialer,
-                description = "Descrição do Summer Smith 23wqoieuqoiweuioqwehjioqwehioqwheoiqwhjiwqehriuqhweriuqgweriugqwkqweyrgqwgrqkygewruyqwgfguhdgfuqwgyuqgwerukygqwerwq"
-            ),
-            Personagem(
-                nome = "Beth Smith",
-                imagem = android.R.drawable.ic_dialog_email,
-                description = "Descrição do Beth Smith"
-            ),
-            Personagem(
-                nome = "Jerry Smith",
-                imagem = android.R.drawable.ic_dialog_map,
-                description = "Descrição do Jerry Smith"
-            )
-        )
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://rickandmortyapi.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        // 2. Criar e configurar o adapter
-        rvItens.adapter = ItemAdapter(personagens)
+        val apiService = retrofit.create(ApiService::class.java)
+
+        apiService.carregarItens().enqueue(object : Callback<ApiRepository.RickAndMortyResponse> {
+            override fun onResponse(
+                call: Call<ApiRepository.RickAndMortyResponse>,
+                response: Response<ApiRepository.RickAndMortyResponse>
+            ) {
+                response.body()?.results?.let {
+                    rvItens.adapter = ItemAdapter(it)
+                }
+            }
+
+            override fun onFailure(call: Call<ApiRepository.RickAndMortyResponse>, t: Throwable) {
+                Log.e("API_ERROR", "Erro ao carregar itens da API", t)
+            }
+        })
     }
-
-    // commit message
 }

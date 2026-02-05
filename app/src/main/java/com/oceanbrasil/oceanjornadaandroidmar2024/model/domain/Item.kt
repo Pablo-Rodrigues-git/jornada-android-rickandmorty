@@ -7,5 +7,7 @@ data class Item(
     @SerializedName("name")
     val nome: String,
     @SerializedName("image")
-    val imagem: String
+    val imagem: String,
+    val status: String,
+    val species: String
 )
