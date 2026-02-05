@@ -18,19 +18,28 @@ object ApiRepository {
 
     private val apiService: ApiService
 
+    // Inicializa o Retrofit e o serviço da API
     init {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
+            // Aqui o Gson converte nosso JSON em objetos Kotlin
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
         apiService = retrofit.create(ApiService::class.java)
+
+        // Carrega os itens na inicialização
         fetchItems()
     }
 
+    // Função para carregar os itens da API
     private fun fetchItems() {
         apiService.carregarItens().enqueue(object : Callback<RickAndMortyResponse> {
-            override fun onResponse(call: Call<RickAndMortyResponse>, response: Response<RickAndMortyResponse>) {
+
+            // Aqui fazemos o tratamento de dados da resposta, se deu certo ou não.
+            override fun onResponse(
+                call: Call<RickAndMortyResponse>,
+                response: Response<RickAndMortyResponse>
+            ) {
                 response.body()?.let {
                     Log.d("API", "Itens carregados com sucesso\n${it.results}")
                     itens.postValue(it.results)
