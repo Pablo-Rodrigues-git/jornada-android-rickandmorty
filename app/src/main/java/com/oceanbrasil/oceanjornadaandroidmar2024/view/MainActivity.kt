@@ -49,4 +49,6 @@ class MainActivity : AppCompatActivity() {
         // 2. Criar e configurar o adapter
         rvItens.adapter = ItemAdapter(personagens)
     }
+
+    // commit message
 }
