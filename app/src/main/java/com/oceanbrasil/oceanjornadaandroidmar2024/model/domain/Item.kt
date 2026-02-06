@@ -22,5 +22,6 @@ data class Item(
     // Estes campos (`status` e `species`) têm o mesmo nome no JSON e na classe,
     // então o Gson os mapeia automaticamente.
     val status: String,
-    val species: String
+    val species: String,
+    val url: String
 )

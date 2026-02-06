@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.oceanbrasil.oceanjornadaandroidmar2024.R
@@ -21,15 +22,15 @@ class ItemAdapter(private val itens: List<Item>) : RecyclerView.Adapter<ItemAdap
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivImagem: ImageView = itemView.findViewById(R.id.ivImagem)
         val tvNome: TextView = itemView.findViewById(R.id.tvNome)
-        val tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
-        val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
+        val tvId: TextView = itemView.findViewById(R.id.tvId)
+        val tvUrl: TextView = itemView.findViewById(R.id.tvUrl)
     }
 
     // `onCreateViewHolder` é chamado pelo RecyclerView quando ele precisa criar um novo ViewHolder.
     // Isso acontece quando a lista é exibida pela primeira vez e quando rolamos para novos itens que ainda não têm uma view criada.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // 1. Inflar o layout XML (`item_layout.xml`) que define a aparência de um item da lista.
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+        // 1. Inflar o layout XML (`grid_item_layout.xml`) que define a aparência de um item da lista.
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.grid_item_layout, parent, false)
         return ViewHolder(view)
     }
 
@@ -40,14 +41,16 @@ class ItemAdapter(private val itens: List<Item>) : RecyclerView.Adapter<ItemAdap
         val item = itens[position]
         // 2. Define o texto do TextView `tvNome` com o nome do personagem.
         holder.tvNome.text = item.nome
-        // 3 define o status do personagem
-        holder.tvStatus.text = item.status
-        // 4. define a especie do personagem
-        holder.tvDescription.text = item.species
+        // 3. Define o texto do TextView `tvId` com o ID do personagem.
+        holder.tvId.text = "#${item.id}"
+        // 4. Define o texto do TextView `tvUrl` com a URL do personagem.
+        holder.tvUrl.text = item.url
 
-        // Lógica para gerar uma cor única para cada nome de personagem.
-        val color = Color.HSVToColor(floatArrayOf((item.nome.hashCode() % 360).toFloat(), 0.8f, 0.9f))
-        holder.tvNome.setTextColor(color)
+        // Lógica para gerar uma cor com base no nome do personagem e aplicá-la ao CardView
+        val cardView = holder.itemView as CardView
+        val color = Color.HSVToColor(floatArrayOf((item.nome.hashCode() % 360).toFloat(), 0.5f, 0.9f))
+        cardView.setCardBackgroundColor(color)
+
 
         Glide.with(holder.itemView.context)
             .load(item.imagem)

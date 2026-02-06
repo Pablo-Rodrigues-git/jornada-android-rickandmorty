@@ -3,7 +3,7 @@ package com.oceanbrasil.oceanjornadaandroidmar2024.view
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oceanbrasil.oceanjornadaandroidmar2024.R
 import com.oceanbrasil.oceanjornadaandroidmar2024.model.api.ApiRepository
@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         // 2. Definir o LayoutManager
         // O LayoutManager organiza como os itens da lista serão exibidos (verticalmente, horizontalmente, em grade, etc).
-        // `LinearLayoutManager` exibe os itens em uma lista vertical, um abaixo do outro.
-        rvItens.layoutManager = LinearLayoutManager(this)
+        // `GridLayoutManager` exibe os itens em uma grade.
+        rvItens.layoutManager = GridLayoutManager(this, 3)
 
         // 3. Configurar o Retrofit
         // Retrofit é uma biblioteca que simplifica a comunicação com APIs na internet (Web Services).
