@@ -8,7 +8,10 @@ data class ItemDetail(
     val name: String,
 
     // O mesmo para `image`.
-    val image: String
+    val image: String,
+
+    // O mesmo para origem
+    val origin: Origin
     // Poderíamos adicionar mais campos aqui (como status, species, gender, origin, etc.)
     // se quiséssemos exibir mais informações na tela de detalhes.
 )

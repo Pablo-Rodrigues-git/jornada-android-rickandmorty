@@ -57,10 +57,12 @@ class ItemDetailActivity : AppCompatActivity() {
                     // 8. Encontrar os componentes (Views) no layout XML.
                     val tvNome = findViewById<TextView>(R.id.tvNome)
                     val ivImagem = findViewById<ImageView>(R.id.ivImagem)
+                    val tvOrigin = findViewById<TextView>(R.id.tvOrigin)
 
                     // 9. Atualizar a interface do usuário com os dados recebidos.
-                    // Define o texto do TextView com o nome do personagem.
+                    // Define o texto dos TextViews com o nome e a origem do personagem.
                     tvNome.text = it.name
+                    tvOrigin.text = it.origin.name
                     // Usa a biblioteca Glide para carregar a imagem da URL no ImageView.
                     Glide.with(ivImagem).load(it.image).into(ivImagem)
                 }
